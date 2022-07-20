@@ -21,11 +21,9 @@ class Solution {
             ArrayList<Integer> scores = new ArrayList<>();
 
             int scoreCount = 0;
-
             int temp;
             for (String op : ops) {
                 try {
-
                     temp = Integer.parseInt(op);
                     if (temp >= (-3 * 104) && temp <= (3 * 104)) {
                         scores.add(temp);
@@ -80,23 +78,23 @@ class Solution {
         if (length % 2 == 0) {
             for (int x = 0; x < length; x++) {
                 System.out.println(sChars[x]);
-                boolean closingBrace = sChars[x] == ')' || sChars[x] == ']' || sChars[x] == '}';
-                boolean openingBrace = sChars[x] == '(' || sChars[x] == '[' || sChars[x] == '{';
+                boolean isClosingBrace = sChars[x] == ')' || sChars[x] == ']' || sChars[x] == '}';
+                boolean isOpeningBrace = sChars[x] == '(' || sChars[x] == '[' || sChars[x] == '{';
 
-                if (closingBrace && x==0){
-                    result= false;
-                }else {
-                    if (openingBrace) {
+                if (isClosingBrace && x == 0) {
+                    result = false;
+                } else {
+                    if (isOpeningBrace) {
                         if (result) {
-                            result = isClosingBrace(length, x);
-                        }else {
+                            result = isValidClosingBrace(length, x);
+                        } else {
                             break;
                         }
-                    } else if (closingBrace) {
-                        if (sChars[x]== sMatchedChars[x]){
-                            result=true;
-                        }else {
-                            result=false;
+                    } else if (isClosingBrace) {
+                        if (sChars[x] == sMatchedChars[x]) {
+                            result = true;
+                        } else {
+                            result = false;
                             break;
                         }
                     }
@@ -108,22 +106,22 @@ class Solution {
         return result;
     }
 
-    private static boolean isClosingBrace(int length, int x) {
+    private static boolean isValidClosingBrace(int length, int x) {
 
-        char closingChar= getClosingChar(sChars[x]);
+        char closingChar = getClosingChar(sChars[x]);
         for (int i = x; i < length; i++) {
             if (i == x) {
                 if (closingChar == sChars[i + 1]) {
-                    sMatchedChars[i + 1]= sChars[i + 1];
+                    sMatchedChars[i + 1] = sChars[i + 1];
                     return true;
-                }else {
-                    i = i+ 2;
+                } else {
+                    i = i + 2;
                 }
-            }else {
+            } else {
                 if (closingChar == sChars[i]) {
-                    sMatchedChars[i]= sChars[i];
+                    sMatchedChars[i] = sChars[i];
                     return true;
-                }else {
+                } else {
                     i += 1;
                 }
             }
@@ -132,7 +130,7 @@ class Solution {
     }
 
     private static char getClosingChar(char aChar) {
-        switch (aChar){
+        switch (aChar) {
             case '(':
                 return ')';
             case '[':
@@ -157,7 +155,6 @@ public class Main {
             System.out.println("valid");
         } else {
             System.out.println("invalid");
-
         }
     }
 }
