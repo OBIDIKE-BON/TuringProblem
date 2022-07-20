@@ -18,7 +18,7 @@ class Solution {
 
             result = 0;
 
-            ArrayList<Integer> scores = new ArrayList<Integer>();
+            ArrayList<Integer> scores = new ArrayList<>();
 
             int scoreCount = 0;
 
@@ -147,10 +147,10 @@ public class Main {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-//        String op = sc.nextLine();
-//        String[] ops = op.split(" ");
-//
-//        System.out.println(Solution.calPoints(ops));
+        String op = sc.nextLine();
+        String[] ops = op.split(" ");
+
+        System.out.println(Solution.calPoints(ops));
 
         String s = sc.nextLine();
         if (Solution.isValid(s)) {
