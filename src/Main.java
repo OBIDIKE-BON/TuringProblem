@@ -5,7 +5,7 @@ import java.lang.*;
 class Solution {
 
     private static char[] sChars;
-    private static char[] sMatchedChars;
+    private static char[] sMatchedClosingChars;
 
     /**
      * @param ops - List of operations@return int Sum of scores after
@@ -71,27 +71,32 @@ class Solution {
 
 
     public static boolean isValid(String s) {
+        //convert  @param s to CharArray
         sChars = s.toCharArray();
         int length = sChars.length;
-        sMatchedChars = new char[length];
+        //create a new CharArray to store matched closing braces
+        sMatchedClosingChars = new char[length];
         boolean result = true;
+        // check if the braces are even
         if (length % 2 == 0) {
             for (int x = 0; x < length; x++) {
                 System.out.println(sChars[x]);
                 boolean isClosingBrace = sChars[x] == ')' || sChars[x] == ']' || sChars[x] == '}';
                 boolean isOpeningBrace = sChars[x] == '(' || sChars[x] == '[' || sChars[x] == '{';
-
+//      if the first brace is a closing brace, return false because it is not closing anything
                 if (isClosingBrace && x == 0) {
                     result = false;
                 } else {
+
                     if (isOpeningBrace) {
                         if (result) {
                             result = isValidClosingBrace(length, x);
                         } else {
                             break;
                         }
+//      if it is a closing brace, check if it matched an opening brace previously
                     } else if (isClosingBrace) {
-                        if (sChars[x] == sMatchedChars[x]) {
+                        if (sChars[x] == sMatchedClosingChars[x]) {
                             result = true;
                         } else {
                             result = false;
@@ -107,19 +112,27 @@ class Solution {
     }
 
     private static boolean isValidClosingBrace(int length, int x) {
-
+//  get the corresponding closing brace of the opening brace
         char closingChar = getClosingChar(sChars[x]);
         for (int i = x; i < length; i++) {
+//  if this is the current opening brace is, check if it closes immediately
             if (i == x) {
                 if (closingChar == sChars[i + 1]) {
-                    sMatchedChars[i + 1] = sChars[i + 1];
+//   if the closing brace matches with the opening,
+//   add it to the matched @sMatchedClosingChars Array
+                    sMatchedClosingChars[i + 1] = sChars[i + 1];
                     return true;
                 } else {
+//   if the first opening brace didn't close immediately, then
+//   there must be  2 braces ( open and close) before it can validly be closed
                     i = i + 2;
                 }
             } else {
                 if (closingChar == sChars[i]) {
-                    sMatchedChars[i] = sChars[i];
+//   if the brace didn't math, then
+//   there it must be closed first, thereby increasing the index
+//   by 1( closing brace) before it can validly be closed
+                    sMatchedClosingChars[i] = sChars[i];
                     return true;
                 } else {
                     i += 1;
